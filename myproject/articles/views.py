@@ -39,7 +39,7 @@ def account(request, name_user):
         name_user = f"Пользователь {name_user} не зарегестрирован"
         articles = ""
 
-    return render(request, 'articles/account.html', {'author_id': author, 'articles': articles})
+    return render(request, 'articles/account.html', {'author_id': author, 'articles': articles, 'name_user': name_user})
 
 
 def main_page(request):
@@ -59,11 +59,12 @@ def view_article(request, art_slug):
     except:
         article = 'Такой статьи нет'
 
+    #Добавь отображение времени
     return render(request, 'articles/article.html', {'article': article})
 
 
 def redact_article(request, art_slug):
-    article = models.Articles.objects.get(slug=art_slug)
+    article = models.Articles.objects.get(slug=art_slug) #Возможно, здесь ошибка вылезет
 
     try:
         user_id = request.user.id
@@ -83,5 +84,23 @@ def redact_article(request, art_slug):
         else:
             form = forms.AddPost()
         return render(request, 'articles/redact_article.html', {'form': form, 'title': article.title})
+    else:
+        return HttpResponseRedirect(reverse('home'))
+    
+
+def delete_article(request, art_slug):
+    article = models.Articles.objects.get(slug=art_slug) #Возможно, здесь ошибка вылезет
+
+    try:
+        user_id = request.user.id
+    except:
+        user_id = -1
+
+    if user_id == article.author.id:
+        if request.method == 'POST':
+            article = models.Articles.objects.get(slug=art_slug)
+            article.delete()
+            return HttpResponseRedirect(reverse('account', args=(f'{request.user.username}', )))
+        return render(request, 'articles/delete_article.html', {'title': article.title})
     else:
         return HttpResponseRedirect(reverse('home'))
