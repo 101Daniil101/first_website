@@ -13,7 +13,7 @@ def login_user(request):
             user = authenticate(request, username=cd['username'], password=cd['password'])
             if user and user.is_active:
                 login(request, user)
-                return HttpResponseRedirect(reverse('login')) #Измени
+                return HttpResponseRedirect(reverse('home')) #Измени
     else:
         form = forms.LoginUserForm()
     return render(request, 'users/login.html', {'form': form})
