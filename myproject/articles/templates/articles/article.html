@@ -6,7 +6,7 @@
     <title>Cтатья</title>
 </head>
 <body>
-    <h1>{{ article.title }}</h1>
+    <a href="{% url 'view_article' article.slug %}"><h2>{{ article.title }}</h2></a>
     <p>{{ article.content }}</p>
 </body>
 </html>

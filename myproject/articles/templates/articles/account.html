@@ -6,9 +6,12 @@
     <title>Профиль</title>
 </head>
 <body>
-    <h1>{{ author }}</h1>
+    <h1>{{ articles.0.author }}</h1>
     {% for article in articles %}
         <h2>{{ article.title }}</h2>
+        {% if author_id == article.author.id %}
+            <a href="{% url 'redact_article' article.slug %}">Редактировать</a>
+        {% endif %}
         <p>{{ article.content }}</p>
     {% endfor %}
 </body>
