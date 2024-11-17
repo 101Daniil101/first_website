@@ -8,8 +8,8 @@
 <body>
     <h1>Главная страница</h1>
     {% for article in articles %}
-        <h2>{{ article.title }}</h2>
-        <a href="{% url 'account' article.author %}">{{ article.author }}</a>
+        <a href="{% url 'view_article' article.slug %}"><h2>{{ article.title }}</h2></a>
+        <a href="{% url 'account' article.author %}"><h3>{{ article.author }}</h3></a>
         <p>{{ article.content }}</p>
     {% endfor %}
 </body>

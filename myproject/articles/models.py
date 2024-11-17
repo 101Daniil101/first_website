@@ -6,4 +6,5 @@ class Articles(models.Model):
     content = models.TextField()
     time_create = models.DateTimeField(auto_now_add=True)
     time_update = models.DateTimeField(auto_now=True) #Апдейт не работает
+    slug = models.SlugField(max_length=255, db_index=True, blank=True, default='')
     author = models.ForeignKey(get_user_model(), on_delete=models.PROTECT, null=True) #Не понял, как работает функция get_user_model()

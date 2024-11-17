@@ -5,6 +5,7 @@ from . import forms
 from . import models
 from django.contrib.auth import get_user_model
 
+
 def create_article(request):
     if request.method == 'POST':
         form = forms.AddPost(request.POST)
@@ -13,6 +14,7 @@ def create_article(request):
             try:
                 article = models.Articles.objects.create(title=cd['title'], content=cd['content'])
                 article.author = request.user
+                article.slug = str(request.user) + '-' + '+'.join(str(article.title).split())
                 article.save()
                 print("Успешно")
             except:
@@ -42,3 +44,10 @@ def main_page(request):
     except:
         articles = "Статей пока что нет"
     return render(request, 'articles/main_page.html', {'articles': articles})
+
+def view_article(request, art_slug):
+    try:
+        article = models.Articles.objects.get(slug=art_slug)
+    except:
+        article = 'Такой статьи нет'
+    return render(request, 'articles/article.html', {'article': article})
