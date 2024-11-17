@@ -6,7 +6,6 @@ from . import models
 from django.contrib.auth import get_user_model
 
 def create_article(request):
-    print(request.user.username)
     if request.method == 'POST':
         form = forms.AddPost(request.POST)
         if form.is_valid():
@@ -36,4 +35,10 @@ def account(request, name_user):
     return render(request, 'articles/account.html', {'author': name_user, 'articles': articles})
 
 def main_page(request):
-    return render(request, 'articles/main_page.html')
+    User = get_user_model()
+    try:
+        id_user = request.user.id
+        articles = models.Articles.objects.exclude(author=id_user)
+    except:
+        articles = "Статей пока что нет"
+    return render(request, 'articles/main_page.html', {'articles': articles})

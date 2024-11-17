@@ -7,5 +7,10 @@
 </head>
 <body>
     <h1>Главная страница</h1>
+    {% for article in articles %}
+        <h2>{{ article.title }}</h2>
+        <a href="{% url 'account' article.author %}">{{ article.author }}</a>
+        <p>{{ article.content }}</p>
+    {% endfor %}
 </body>
 </html>
