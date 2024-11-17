@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from . import forms
 from . import models
+from django.contrib.auth import get_user_model
 
 def create_article(request):
     print(request.user.username)
@@ -11,7 +12,7 @@ def create_article(request):
         if form.is_valid():
             cd = form.cleaned_data
             try:
-                article = models.Articles.objects.create(title=cd['title'], content=['content'])
+                article = models.Articles.objects.create(title=cd['title'], content=cd['content'])
                 article.author = request.user
                 article.save()
                 print("Успешно")
@@ -24,8 +25,15 @@ def create_article(request):
     return render(request, 'articles/create_article.html', {'form': form})
 
 def account(request, name_user):
-    print(request.user)
-    return render(request, 'articles/account.html')
+    User = get_user_model()
+    try:
+        User.objects.get(username=name_user)
+        author_id = User.objects.get(username=name_user).id
+        articles = models.Articles.objects.filter(author=author_id)
+    except:
+        name_user = f"Пользователь {name_user} не зарегестрирован"
+        articles = ""
+    return render(request, 'articles/account.html', {'author': name_user, 'articles': articles})
 
 def main_page(request):
     return render(request, 'articles/main_page.html')
