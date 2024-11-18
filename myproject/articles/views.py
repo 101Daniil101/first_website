@@ -49,12 +49,12 @@ def main_page(request):
     User = get_user_model()
 
     try:
-        id_user = request.user.id
-        articles = models.Articles.objects.exclude(author=id_user)
+        user = request.user
+        articles = models.Articles.objects.exclude(author=user.id)
     except:
         articles = "Статей пока что нет"
 
-    return render(request, 'articles/main_page.html', {'articles': articles})
+    return render(request, 'articles/main_page.html', {'articles': articles, 'user': request.user})
 
 
 def view_article(request, art_slug):
@@ -62,7 +62,7 @@ def view_article(request, art_slug):
         article = models.Articles.objects.get(slug=art_slug)
     except:
         article = 'Такой статьи нет'
-    
+
     return render(request, 'articles/article.html', {'article': article})
 
 

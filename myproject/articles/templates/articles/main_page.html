@@ -10,11 +10,12 @@
     <a href="{% url 'register' %}"><h5>Регистрация</h5></a>
     <a href="{% url 'login' %}"><h5>Войти</h5></a>
     <a href="{% url 'logout' %}"><h5>Выйти из аккаунта</h5></a>
-    <a href="{% url 'account' articles.0.author.username %}"><h5>Мой аккаунт</h5></a>
+    <a href="{% url 'account' user %}"><h5>Мой аккаунт</h5></a>
+    <a href="{% url 'create_article' %}"><h5>Создать статью</h5></a>
     {% for article in articles %}
         <a href="{% url 'view_article' article.slug %}"><h2>{{ article.title }}</h2></a>
         <a href="{% url 'account' article.author %}"><h3>{{ article.author }}</h3></a>
-        <a href="{% url 'category' article.cat.slug %}">{{ article.cat.title }}</a>
+        <a href="{% url 'category' article.cat.slug %}">Категория: {{ article.cat.title }}</a>
         <p>{{ article.content }}</p>
     {% endfor %}
 </body>
