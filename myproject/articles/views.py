@@ -62,8 +62,7 @@ def view_article(request, art_slug):
         article = models.Articles.objects.get(slug=art_slug)
     except:
         article = 'Такой статьи нет'
-
-    #Добавь отображение времени
+    
     return render(request, 'articles/article.html', {'article': article})
 
 
