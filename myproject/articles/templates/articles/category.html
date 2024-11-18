@@ -3,14 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Главная страница</title>
+    <title>Категории</title>
 </head>
 <body>
-    <h1>Главная страница</h1>
+    <h1>Категория "{{ articles.0.cat.title }}"</h1>
     {% for article in articles %}
         <a href="{% url 'view_article' article.slug %}"><h2>{{ article.title }}</h2></a>
-        <a href="{% url 'account' article.author %}"><h3>{{ article.author }}</h3></a>
-        <a href="{% url 'category' article.cat.slug %}">{{ article.cat.title }}</a>
         <p>{{ article.content }}</p>
     {% endfor %}
 </body>

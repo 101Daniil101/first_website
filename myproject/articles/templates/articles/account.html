@@ -13,6 +13,7 @@
             <a href="{% url 'redact_article' article.slug %}">Редактировать</a>
             <a href="{% url 'delete_article' article.slug %}">Удалить</a>
         {% endif %}
+        <a href="{% url 'category' article.cat.slug %}">Категория: {{ article.cat.title }}</a>
         <p>{{ article.content }}</p>
     {% endfor %}
 </body>

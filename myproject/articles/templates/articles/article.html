@@ -7,6 +7,7 @@
 </head>
 <body>
     <a href="{% url 'view_article' article.slug %}"><h2>{{ article.title }}</h2></a>
+    <a href="{% url 'category' article.cat.slug %}">Категория: {{ article.cat.title }}</a>
     <p>{{ article.content }}</p>
 </body>
 </html>
